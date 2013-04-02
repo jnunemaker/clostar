@@ -11,7 +11,10 @@
 
 (def later-events
   [{:id "1" :type "WatchEvent"}
-   {:id "5" :type "WatchEvent"}])
+   {:id "2" :type "FollowEvent"}
+   {:id "3" :type "SomethingEvent"}
+   {:id "5" :type "WatchEvent"}
+   {:id "6" :type "FooEvent"}])
 
 (fact "when the events API returns a list of events"
   (prerequisite (events/user-events "username") => fixture)
@@ -22,48 +25,16 @@
   (fact "get-watches returns only WatchEvents"
     (poller/get-watches "username") => (just (first fixture))))
 
-(defn loop-recur [] nil)
-
-(defn events-then-throw
-  [iterations]
-  (let [times-called (atom 0)]
-    (fn [username]
-      (if (> @times-called iterations)
-        (throw (RuntimeException. "Time's up!"))
-        (do
-          (loop-recur)
-          (swap! times-called inc)
-          fixture)))))
-
-(with-redefs [poller/get-events (events-then-throw 5)]
-  (fact "poll hits the API periodically until an exception is thrown"
-    (poller/poll "username" 0.001 identity) => (throws RuntimeException)
-    (provided
-      (loop-recur) => nil :times 6)))
+(def test-sequence [fixture later-events])
 
 (def callback-events (atom []))
 (defn callback [event] (swap! callback-events (fn [events] (conj events event))))
 
-(with-redefs [poller/get-events (events-then-throw 1)]
-  (fact "poll calls the callback function only for watch events"
-    (poller/poll "username" 0.001 callback) => (throws RuntimeException)
-    (provided (callback (contains {:id "1" :type "WatchEvent"})) => nil :times 1)))
+(fact "consume-with-delay takes a sequence of GitHub events and returns unique
+      events in increasing order by id"
+  (#'poller/consume-with-delay test-sequence 0.001 callback) => nil
+  (map #(:id %1) @callback-events) => (just ["1" "2" "3" "4" "5" "6"]))
 
-(defn event-sequence
-  []
-  (let [iterations (atom 0)]
-  (fn [_]
-    (swap! iterations inc)
-    (condp = @iterations
-      1 fixture
-      2 later-events
-      (throw (RuntimeException. "Time's up!"))))))
-
-(defn callback-event-list [] @callback-events)
-
-(with-redefs [poller/get-events (event-sequence)]
-  (with-state-changes [(before :facts (reset! callback-events []))]
-    (fact "only events with ids higher
-          than the previously highest id will be processed"
-      (poller/poll "username" 0.001 callback) => (throws RuntimeException)
-      (callback-event-list) => (just [(contains {:id "1"}) (contains {:id "5"})]))))
+  (fact "poll hits the API until an exception is thrown"
+    (poller/poll "username" 0.001 identity) => (throws RuntimeException)
+    (provided (poller/get-events anything) =throws=> (RuntimeException.)))
