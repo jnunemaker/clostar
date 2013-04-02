@@ -10,15 +10,15 @@
   (let [doc {:r (:name (:repo event))
             :u (:login (:actor event))}]
     (try
-      (m/insert! :stars doc)
+      (m/insert! :events doc)
       (catch com.mongodb.MongoException$DuplicateKey e nil))))
 
 (defn find-events
   "Finds events ordered by creation time."
   []
-  (m/fetch :stars :sort {:_id -1}))
+  (m/fetch :events :sort {:_id -1}))
 
 (defn add-indexes
   "Add indexes for MongoDB."
   []
-  (m/add-index! :stars [:r :u] :unique true))
+  (m/add-index! :events [:r :u] :unique true))
