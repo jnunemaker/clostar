@@ -41,5 +41,6 @@
   "Poll for watch events for a user every interval seconds and call a collector
   function on each new event."
   [username interval collector-fn]
-  (let [github-events (repeatedly (get-watches username))]
+  (let [github-events (repeatedly #(get-watches username))]
+    (log/info "starting poller")
     (consume-with-delay github-events interval collector-fn)))
