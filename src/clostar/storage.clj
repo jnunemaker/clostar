@@ -2,7 +2,7 @@
   (:require [somnium.congomongo :as m]))
 
 (m/set-connection!
-  (m/make-connection (or (System/getenv "MONGOHQ_URL") "mongodb://127.0.0.1:17017/clostar")))
+  (m/make-connection (or (System/getenv "MONGODB_URL") "mongodb://127.0.0.1:17017/clostar")))
 
 (defn insert-event
   "Inserts a watch event into Mongo."
