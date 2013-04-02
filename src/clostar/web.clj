@@ -35,6 +35,6 @@
   (GET "/" request (index request)))
 
 (future
-  (poller/poll "jnunemaker" 300 storage/insert-event))
+  (poller/poll (or (System/getenv "CLOSTAR_USERNAME") "jnunemaker") 300 storage/insert-event))
 
 (def app (handler/site app-routes))
