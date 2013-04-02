@@ -3,6 +3,7 @@
             [compojure.handler :as handler]
             [clostar.storage :as storage]
             [clostar.poller :as poller]
+            [clostar.core :as core]
             [clojure.java.io :as io]
             [clostache.parser :as tpl]))
 
@@ -36,5 +37,7 @@
 
 (future
   (poller/poll (or (System/getenv "CLOSTAR_USERNAME") "jnunemaker") 300 storage/insert-event))
+
+(core/ping-on-interval)
 
 (def app (handler/site app-routes))
