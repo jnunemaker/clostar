@@ -15,5 +15,7 @@
                  [de.ubercode.clostache/clostache "1.3.1"]
                  [ring "1.1.8"]
                  [compojure "1.1.5"]
+                 [clj-http "0.4.0"]
+                 [clojurewerkz/quartzite "1.0.1"]
                  [tentacles "0.2.4"]]
   :plugins [[lein-ring "0.8.2"]])
