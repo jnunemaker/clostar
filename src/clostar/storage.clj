@@ -1,5 +1,6 @@
 (ns clostar.storage
-  (:require [somnium.congomongo :as m]))
+  (:require [somnium.congomongo :as m]
+            [clojure.tools.logging :as log]))
 
 (m/set-connection!
   (m/make-connection (or (System/getenv "MONGODB_URL") "mongodb://127.0.0.1:17017/clostar")))
@@ -11,6 +12,7 @@
             :u (:login (:actor event))}]
     (try
       (m/insert! :events doc)
+      (log/info "inserting:" doc)
       (catch com.mongodb.MongoException$DuplicateKey e nil))))
 
 (defn find-events

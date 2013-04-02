@@ -31,6 +31,7 @@
         (let [watch-events (first events)
               max-id (reduce max-event-id @last-id watch-events)
               unseen-watches (filter #(> (event-id %1) @last-id) watch-events)]
+          (log/info "found:" (count unseen-watches) "max-id:" max-id)
           (dorun (map collector-fn unseen-watches))
           (reset! last-id max-id)
           (Thread/sleep (* 1000 interval))
@@ -42,4 +43,3 @@
   [username interval collector-fn]
   (let [github-events (repeatedly (get-watches username))]
     (consume-with-delay github-events interval collector-fn)))
-
