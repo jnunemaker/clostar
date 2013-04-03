@@ -4,9 +4,9 @@
 
 Given a GitHub username, this app pulls in all received events related to you or someone you follow starring a repo. It also pulls in any of your repos that get starred.
 
-Eventually, I think this could be really cool. Right now it has no styles and no pagination, so it is probably useless.
+Eventually, I think this could be really cool. Right now it has no pagination, so it is probably useless.
 
-You can see what it looks like for me here (WARNING: UGLINESS TO FOLLOW):
+You can see what it looks like for me here:
 http://shrouded-island-2540.herokuapp.com/
 
 ## Install
@@ -26,6 +26,9 @@ heroku config:add CLOSTAR_USERNAME=your-github-username
 
 # create mongo database with one of the hosted providers and set url here
 heroku config:add MONGODB_URL=mongodb://...
+
+# if you've never created the database before, add a quick unique index
+MONGODB_URL=mongodb://... lein add-indexes
 
 # setup the url where your app is hosted, either the heroku url or a custom one
 heroku config:add APP_URL=http://heroku-app-name.herokuapp.com
