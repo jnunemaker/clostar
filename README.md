@@ -6,6 +6,9 @@ Given a GitHub username, this app pulls in all received events related to you or
 
 Eventually, I think this could be really cool. Right now it has no styles and no pagination, so it is probably useless.
 
+You can see what it looks like for me here (WARNING: UGLINESS TO FOLLOW):
+http://shrouded-island-2540.herokuapp.com/
+
 ## Install
 
 ```
