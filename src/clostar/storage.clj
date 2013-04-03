@@ -22,5 +22,5 @@
 
 (defn add-indexes
   "Add indexes for MongoDB."
-  []
+  [& args]
   (m/add-index! :events [:r :u] :unique true))

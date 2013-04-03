@@ -1,12 +1,24 @@
-<html>
-<head>
-</head>
-<body>
-  <h2>ALL THE EVENTS</h2>
-  <ul>
-  {{#events}}
-    <li><a href="https://github.com/{{r}}">{{r}}</a> by <a href="https://github.com/{{u}}">{{u}}</a></li>
-  {{/events}}
-  </ul>
-</body>
-</html>
+<div class="row">
+  <div class="span4 offset1 well">
+    <div class="star-label text-center">
+      followed by {{user}}<br/>
+      <img src="/images/star.png" alt="starred" />
+    </div>
+    <ul class="unstyled">
+    {{#following-events}}
+      <li><a href="https://github.com/{{r}}">{{r}}</a> by <a href="https://github.com/{{u}}">{{u}}</a></li>
+    {{/following-events}}
+    </ul>
+  </div>
+  <div class="span4 offset2 well">
+    <div class="star-label text-center">
+      by {{user}}<br/>
+      <img src="/images/star.png" alt="starred" />
+    </div>
+    <ul class="unstyled">
+    {{#user-events}}
+      <li><a href="https://github.com/{{r}}">{{r}}</a> by <a href="https://github.com/{{u}}">{{u}}</a></li>
+    {{/user-events}}
+    </ul>
+  </div>
+</div>
