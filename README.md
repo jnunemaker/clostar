@@ -1,6 +1,10 @@
 # clostar
 
-Clojure app that pulls in star events from your timeline so you can see what your friends are starring.
+**This is really nothing you care about**. I'm playing with clojure and thought interacting with Mongo and the GitHub API would be fun.
+
+Given a GitHub username, this app pulls in all received events related to you or someone you follow starring a repo. It also pulls in any of your repos that get starred.
+
+Eventually, I think this could be really cool. Right now it has no styles and no pagination, so it is probably useless.
 
 ## Install
 
@@ -26,6 +30,10 @@ heroku config:add APP_URL=http://heroku-app-name.herokuapp.com
 # deploy the app to heroku
 git push heroku master
 ```
+
+## Thanks
+
+Thanks to [@derekgr](https://github.com/derekgr) for pairing with me on this.
 
 ## License
 
