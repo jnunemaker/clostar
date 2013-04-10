@@ -18,4 +18,5 @@
                  [clj-http "0.4.0"]
                  [clojurewerkz/quartzite "1.0.1"]
                  [tentacles "0.2.4"]]
+  :aliases {"add-indexes" ["do" "run" "-m" "clostar.storage/add-indexes"]}
   :plugins [[lein-ring "0.8.2"]])

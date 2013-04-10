@@ -1,0 +1,31 @@
+<html>
+<head>
+  <title>stars for {{user}}</title>
+  <link rel="icon" type="image/png" href="/images/star2.png" />
+  {{#css}}
+  <link rel="stylesheet" href="{{.}}" type="screen" />
+  {{/css}}
+  {{#js}}
+  <script type="text/javascript" src="{{.}}"></script>
+  {{/js}}
+  <style type="text/css">
+    body {
+      padding-top: 25px;
+    }
+
+    .star-label {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .star-label img {
+      width: 42px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="content">
+    {{{content}}}
+  </div>
+</body>
+</html>
